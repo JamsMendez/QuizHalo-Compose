@@ -1,5 +1,6 @@
 package com.jamsmendez.quizhalo.ui.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +22,7 @@ import com.jamsmendez.quizhalo.ui.theme.QuizHaloTheme
 fun Question(
   modifier: Modifier = Modifier,
   question: QuestionModel,
-  onSelectOption: (index: Int, isCorrect: Boolean) -> Unit = { _: Int, _: Boolean -> }
+  onOptionSelected: (index: Int, isCorrect: Boolean) -> Unit = { _: Int, _: Boolean -> }
 ) {
   Column(
     modifier = modifier
@@ -48,7 +49,7 @@ fun Question(
         answer = answer,
         selected = answer.selected,
         expose = question.answered,
-        onSelectOption = { isCorrect -> onSelectOption(index, isCorrect) }
+        onOptionSelected = { isCorrect -> onOptionSelected(index, isCorrect) }
       )
     }
   }
@@ -68,6 +69,9 @@ fun QuestionPreview() {
       )
     )
 
-    Question(question = question)
+    Question(
+      modifier = Modifier.background(Color.Black),
+      question = question
+    )
   }
 }

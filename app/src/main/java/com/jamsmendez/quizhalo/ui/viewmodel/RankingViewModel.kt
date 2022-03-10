@@ -7,16 +7,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jamsmendez.quizhalo.data.repository.Result
 import com.jamsmendez.quizhalo.data.repository.ScoreRepository
+import com.jamsmendez.quizhalo.navegation.RouteNavigator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class ScoresViewModel
+class RankingViewModel
   @Inject constructor(
-    private val scoreRepository: ScoreRepository
-): ViewModel() {
+    private val scoreRepository: ScoreRepository,
+    private val routeNavigator: RouteNavigator
+): ViewModel(), RouteNavigator by routeNavigator {
   private val _scoreListState: MutableState<ScoreListState> = mutableStateOf(ScoreListState())
 
   val scoreListState: State<ScoreListState> = _scoreListState
@@ -24,6 +26,8 @@ class ScoresViewModel
   init {
     getScoreList()
   }
+
+  fun onBackClicked() = popBackStack()
 
   private fun getScoreList() {
     scoreRepository.getScoreList().onEach { result ->

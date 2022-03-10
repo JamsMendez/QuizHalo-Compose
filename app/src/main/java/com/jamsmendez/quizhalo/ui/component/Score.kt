@@ -1,6 +1,5 @@
 package com.jamsmendez.quizhalo.ui.component
 
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -11,9 +10,10 @@ import androidx.compose.ui.unit.dp
 import com.jamsmendez.quizhalo.ui.theme.HaloTypography
 import com.jamsmendez.quizhalo.ui.theme.QuizHaloTheme
 
-
 @Composable
-fun Score(modifier: Modifier = Modifier, value: Int = 0) {
+fun Score(
+  modifier: Modifier = Modifier,
+  value: Int = 0) {
   Row(
     modifier = modifier.fillMaxWidth(),
     horizontalArrangement = Arrangement.Center
@@ -35,6 +35,6 @@ fun Score(modifier: Modifier = Modifier, value: Int = 0) {
 @Composable
 fun ScorePreview() {
   QuizHaloTheme() {
-    Score(Modifier, 300)
+    Score(value = 300)
   }
 }

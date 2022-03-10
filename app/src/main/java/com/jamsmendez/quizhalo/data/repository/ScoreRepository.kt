@@ -1,10 +1,13 @@
 package com.jamsmendez.quizhalo.data.repository
 
+import android.util.Log
 import com.google.firebase.firestore.Query
 import com.jamsmendez.quizhalo.model.ScoreModel
 import com.jamsmendez.quizhalo.remote.QuizHaloFirestore
 import com.jamsmendez.quizhalo.util.Constants.FIELD_POINTS
+import com.jamsmendez.quizhalo.util.Constants.FIELD_USERNAME
 import com.jamsmendez.quizhalo.util.Constants.RANKING_LIMIT
+import com.jamsmendez.quizhalo.util.Labels.ERROR_UNKNOWN
 import com.jamsmendez.quizhalo.util.Labels.MESSAGE_EQUAL_POINTS
 import com.jamsmendez.quizhalo.util.Labels.MESSAGE_LESS_POINTS
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +27,7 @@ class ScoreRepository
       emit(Result.Loading<ScoreModel>())
 
       val score = quizHaloFirestore.scores
-        .whereEqualTo("username", scoreIn.username)
+        .whereEqualTo(FIELD_USERNAME, scoreIn.username)
         .get()
         .await()
         .toObjects(ScoreModel::class.java)
@@ -36,14 +39,14 @@ class ScoreRepository
             scoreIn.id = score.id
             quizHaloFirestore.scores.document(scoreIn.id).set(scoreIn).await()
             emit(Result.Success<ScoreModel>(scoreIn))
-
           }
+
           score.points == scoreIn.points -> {
-            emit(Result.Error<ScoreModel>(MESSAGE_EQUAL_POINTS))
+            emit(Result.Error<ScoreModel>(MESSAGE_EQUAL_POINTS, score))
 
           }
           else -> {
-            emit(Result.Error<ScoreModel>(MESSAGE_LESS_POINTS))
+            emit(Result.Error<ScoreModel>(MESSAGE_LESS_POINTS, score))
           }
         }
 
@@ -54,7 +57,7 @@ class ScoreRepository
 
     } catch (e: Exception) {
       emit(Result.Error<ScoreModel>(
-        message = e.localizedMessage ?: "Error desconicido")
+        message = e.localizedMessage ?: ERROR_UNKNOWN)
       )
     }
   }
@@ -74,7 +77,7 @@ class ScoreRepository
 
     } catch (e: Exception) {
       emit(Result.Error<List<ScoreModel>>(
-        message = e.localizedMessage ?: "Error desconicido")
+        message = e.localizedMessage ?: ERROR_UNKNOWN)
       )
     }
   }

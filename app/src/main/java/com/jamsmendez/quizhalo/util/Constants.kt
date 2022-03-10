@@ -11,6 +11,7 @@ object Constants {
   const val FIELD_IS_CORRECT = "isCorrect"
 
   const val FIELD_POINTS = "points"
+  const val FIELD_USERNAME = "username"
 
   const val NUM_QUESTIONS = 3
   const val RANKING_LIMIT = 10

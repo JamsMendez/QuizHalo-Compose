@@ -12,4 +12,5 @@ object Labels {
   const val MESSAGE_EQUAL_POINTS = "Tu puntuacion fue la misma!"
   const val MESSAGE_GOD_JOB = "Buen trabajo soldado!"
   const val TITLE_SPARTANS = "Spartans"
+  const val ERROR_UNKNOWN = "Error desconocido"
 }

@@ -18,16 +18,22 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.jamsmendez.quizhalo.R
+import com.jamsmendez.quizhalo.navegation.RouteNavigator
+import com.jamsmendez.quizhalo.ui.screen.RankingRoute
+import com.jamsmendez.quizhalo.ui.screen.RegisterRoute
+import com.jamsmendez.quizhalo.util.Labels.ERROR_UNKNOWN
 
 @HiltViewModel
 class QuizViewModel
-  @Inject constructor(
-    // @Inject constructor(@ApplicationContext context : Context) ... maybe
-    private val context: Context,
-    private val questionRepository: QuestionRepository
-  ): ViewModel() {
+@Inject constructor(
+  // @Inject constructor(@ApplicationContext context : Context) ... maybe
+  private val context: Context,
+  private val questionRepository: QuestionRepository,
+  private val routerNavigator: RouteNavigator,
+) : ViewModel(), RouteNavigator by routerNavigator {
 
-  private val _questionListState: MutableState<QuestionListState> = mutableStateOf(QuestionListState())
+  private val _questionListState: MutableState<QuestionListState> =
+    mutableStateOf(QuestionListState())
   private val _currentQuestionState: MutableState<QuestionModel> = mutableStateOf(QuestionModel())
   private val _valueTimerDownState: MutableState<Float> = mutableStateOf(1f)
 
@@ -89,16 +95,7 @@ class QuizViewModel
     return false
   }
 
-  fun onSelectOption(index: Int, isCorrect: Boolean, finish: (Score: Int) -> Unit = {}) {
-    if (_valueTimerDownState.value < 1f) {
-      if (isCorrect) _scorePoints += _points
-
-      exposeQuestionResult(index)
-      restartTimerDown(isCorrect, finish)
-    }
-  }
-
-  fun startTimerDown() {
+  fun onStartClicked() {
     _questionIndex += 1
 
     getQuestionList {
@@ -109,7 +106,25 @@ class QuizViewModel
     }
   }
 
-  private fun restartTimerDown(isCorrect: Boolean, finish: (score: Int) -> Unit = {}) {
+  fun onRankingClicked() {
+    navigateToRoute(RankingRoute.route)
+  }
+
+  fun onOptionSelected(index: Int, isCorrect: Boolean) {
+    if (_valueTimerDownState.value < 1f) {
+      if (isCorrect) _scorePoints += _points
+
+      exposeQuestionResult(index)
+      restartTimerDown(isCorrect)
+    }
+  }
+
+  private fun goToSignInScreen() {
+    val route = RegisterRoute.get(_scorePoints)
+    navigateToRoute(route)
+  }
+
+  private fun restartTimerDown(isCorrect: Boolean) {
     _countDownTimer.cancel()
 
     restartLowShieldsSound()
@@ -131,15 +146,19 @@ class QuizViewModel
       }
 
       if (_questionIndex == NUM_QUESTIONS) {
-        val scorePoints = _scorePoints.toInt()
-        finish(scorePoints)
+        goToSignInScreen()
 
-        _scorePoints = 0
-        _points = 0
-        _questionIndex = -1
+        // I do not like this ...
+        viewModelScope.launch {
+          delay(1000);
 
-        _valueTimerDownState.value = 1f
-        _currentQuestionState.value = QuestionModel()
+          _scorePoints = 0
+          _points = 0
+          _questionIndex = -1
+
+          _valueTimerDownState.value = 1f
+          _currentQuestionState.value = QuestionModel()
+        }
       }
     }
   }
@@ -164,7 +183,7 @@ class QuizViewModel
     _currentQuestionState.value = QuestionModel(
       id = question.id,
       content = question.content,
-      options = question.options.map { answer->
+      options = question.options.map { answer ->
         if (!answer.correct) answer.selected = true
         answer
       },
@@ -174,9 +193,9 @@ class QuizViewModel
 
   private fun getQuestionList(done: () -> Unit = {}) {
     questionRepository.getQuestionList().onEach { result ->
-      when(result) {
+      when (result) {
         is Result.Error -> {
-          _questionListState.value = QuestionListState(error = result.message ?: "Error inesperado")
+          _questionListState.value = QuestionListState(error = result.message ?: ERROR_UNKNOWN)
         }
         is Result.Loading -> {
           _questionListState.value = QuestionListState(isLoading = true)

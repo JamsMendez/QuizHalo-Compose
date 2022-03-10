@@ -10,13 +10,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.jamsmendez.quizhalo.R
 import com.jamsmendez.quizhalo.model.AnswerModel
+import com.jamsmendez.quizhalo.ui.theme.HaloTypography
+import com.jamsmendez.quizhalo.ui.theme.QuizHaloTheme
 
 @Composable
 fun QuestionOption(
@@ -24,13 +22,13 @@ fun QuestionOption(
   answer: AnswerModel,
   selected: Boolean = false,
   expose: Boolean = false,
-  onSelectOption: (isCorrect: Boolean) -> Unit = {}
+  onOptionSelected: (isCorrect: Boolean) -> Unit = {}
 ) {
   Box(
     modifier = Modifier
       .padding(16.dp, 4.dp)
       .clickable {
-        onSelectOption(answer.correct)
+        onOptionSelected(answer.correct)
       }
   ) {
     Row(
@@ -50,13 +48,21 @@ fun QuestionOption(
         text = answer.content,
         modifier = Modifier,
         color = Color.White,
-        fontSize = 16.sp,
-        fontFamily = FontFamily(
-          Font(R.font.rajdhani_regular),
-          Font(R.font.rajdhani_regular, FontWeight.Bold)
-        ),
-        fontWeight = FontWeight.Bold
+        style = HaloTypography.subtitle1
       )
     }
+  }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun QuestionOptionPreview() {
+  QuizHaloTheme {
+    QuestionOption(
+      modifier = Modifier.background(Color.Black),
+      answer = AnswerModel(content = "Respuesta", correct = false, selected = false),
+      selected = true,
+      expose = false,
+    )
   }
 }

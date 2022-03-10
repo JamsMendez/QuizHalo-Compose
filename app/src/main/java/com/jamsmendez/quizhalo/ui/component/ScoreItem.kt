@@ -10,7 +10,6 @@ import androidx.compose.ui.unit.dp
 import com.jamsmendez.quizhalo.model.ScoreModel
 import com.jamsmendez.quizhalo.ui.theme.QuizHaloTheme
 
-
 @Composable
 fun ScoreItem(
   modifier: Modifier = Modifier,

@@ -1,10 +1,9 @@
-package com.jamsmendez.quizhalo.ui.screen
+package com.jamsmendez.quizhalo.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -13,42 +12,31 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.jamsmendez.quizhalo.R
-import com.jamsmendez.quizhalo.ui.component.ScoreItem
+import com.jamsmendez.quizhalo.model.ScoreModel
 import com.jamsmendez.quizhalo.ui.theme.HaloTypography
 import com.jamsmendez.quizhalo.ui.theme.QuizHaloTheme
-import com.jamsmendez.quizhalo.ui.viewmodel.ScoresViewModel
-import com.jamsmendez.quizhalo.util.Labels.BTN_RANKING
-import com.jamsmendez.quizhalo.util.Labels.TITLE_SPARTANS
+import com.jamsmendez.quizhalo.util.Labels
 
 @Composable
-fun ScoresScreen(
-  navController: NavHostController,
-  scoreViewModel: ScoresViewModel = hiltViewModel()
+fun Ranking(
+  scores: List<ScoreModel> = emptyList(),
+  onBackClicked: () -> Unit = {},
 ) {
-
-  val scoresListState by scoreViewModel.scoreListState
-
   Box(
     modifier = Modifier
       .fillMaxSize()
   ) {
     Image(
       painter = painterResource(id = R.drawable.background_scores),
-      contentDescription = "Image background",
+      contentDescription = "Image background in Scores",
       modifier = Modifier.fillMaxSize(),
       contentScale = ContentScale.Crop
     )
@@ -60,7 +48,7 @@ fun ScoresScreen(
       TopAppBar(
         title = {
           Text(
-            text = BTN_RANKING,
+            text = Labels.BTN_RANKING,
             modifier = Modifier
               .fillMaxWidth()
               .padding(end = 64.dp),
@@ -70,11 +58,7 @@ fun ScoresScreen(
         modifier = Modifier
           .background(Color.Transparent),
         navigationIcon = {
-          IconButton(
-            onClick = {
-              navController.popBackStack()
-            }
-          ) {
+          IconButton(onClick = onBackClicked) {
             Icon(
               Icons.Filled.ArrowBack,
               contentDescription = null,
@@ -86,7 +70,7 @@ fun ScoresScreen(
         elevation = 0.dp,
       )
       Text(
-        text = TITLE_SPARTANS,
+        text = Labels.TITLE_SPARTANS,
         modifier = Modifier
           .fillMaxWidth(),
         Color.White,
@@ -100,10 +84,18 @@ fun ScoresScreen(
           vertical = 8.dp
         )
       ) {
-        itemsIndexed(scoresListState.scores) { index, score ->
+        itemsIndexed(scores) { index, score ->
           ScoreItem(score = score, position = index + 1)
         }
       }
     }
+  }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun RankingPreview() {
+  QuizHaloTheme {
+    Ranking()
   }
 }
