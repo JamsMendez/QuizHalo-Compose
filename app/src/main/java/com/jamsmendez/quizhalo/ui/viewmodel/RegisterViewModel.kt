@@ -6,6 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.DocumentId
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.model.Document
+import com.google.firebase.firestore.model.DocumentKey
+import com.google.firebase.firestore.model.DocumentSet
 import com.jamsmendez.quizhalo.data.repository.Result
 import com.jamsmendez.quizhalo.data.repository.ScoreRepository
 import com.jamsmendez.quizhalo.model.ScoreModel
@@ -39,7 +45,6 @@ class RegisterViewModel
     if (username.trim().isEmpty()) return
 
     val score = ScoreModel(
-      id = UUID.randomUUID().toString(),
       username = username,
       points = _scorePointsState.value
     )

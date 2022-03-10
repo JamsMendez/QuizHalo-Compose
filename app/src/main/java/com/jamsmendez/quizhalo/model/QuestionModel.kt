@@ -10,10 +10,3 @@ data class QuestionModel(
 
   var answered: Boolean = false
 )
-
-data class AnswerModel(
-  val content: String = "",
-  val correct: Boolean = false,
-
-  var selected: Boolean = false
-)

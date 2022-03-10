@@ -43,7 +43,6 @@ class ScoreRepository
 
           score.points == scoreIn.points -> {
             emit(Result.Error<ScoreModel>(MESSAGE_EQUAL_POINTS, score))
-
           }
           else -> {
             emit(Result.Error<ScoreModel>(MESSAGE_LESS_POINTS, score))
@@ -51,6 +50,8 @@ class ScoreRepository
         }
 
       } else {
+        scoreIn.id = quizHaloFirestore.scores.document().id
+
         quizHaloFirestore.scores.document(scoreIn.id).set(scoreIn).await()
         emit(Result.Success<ScoreModel>(scoreIn))
       }
