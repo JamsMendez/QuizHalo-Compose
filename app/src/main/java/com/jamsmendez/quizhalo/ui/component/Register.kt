@@ -21,7 +21,8 @@ fun Register(
   scorePoint: Int,
   isRegistered: Boolean,
   onBackClicked: () -> Unit = {},
-  onSignInClicked: (username: String) -> Unit = {}
+  onSignInClicked: (username: String) -> Unit = {},
+  onRankingClicked: () -> Unit = {}
 ) {
   Box(
     modifier = Modifier
@@ -90,7 +91,7 @@ fun Register(
         )
 
         if (!isRegistered) {
-          SignInForm(
+          RegisterForm(
             Modifier
               .fillMaxWidth()
               .padding(horizontal = 16.dp),
@@ -109,10 +110,27 @@ fun Register(
             .padding(horizontal = 16.dp)
         ) {
           SimpleButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+              .fillMaxWidth()
+              .weight(0.45f)
+            ,
             text = Labels.BTN_PLAY_AGAIN,
             lightMode = true,
             onClick = onBackClicked
+          )
+          Spacer(
+            modifier = Modifier
+              .height(16.dp)
+              .weight(0.1f)
+          )
+          SimpleButton(
+            modifier = Modifier
+              .fillMaxWidth()
+              .weight(0.45f)
+            ,
+            text = Labels.BTN_RANKING,
+            lightMode = true,
+            onClick = onRankingClicked
           )
         }
       }

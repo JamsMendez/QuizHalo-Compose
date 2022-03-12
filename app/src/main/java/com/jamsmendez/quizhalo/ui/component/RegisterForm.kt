@@ -14,7 +14,7 @@ import com.jamsmendez.quizhalo.ui.viewmodel.TextFieldViewModel
 import com.jamsmendez.quizhalo.util.Labels.BTN_SIGN_IN
 
 @Composable
-fun SignInForm(
+fun RegisterForm(
   modifier: Modifier = Modifier,
   textFieldViewModel: TextFieldViewModel = hiltViewModel(),
   onSignInClicked: (username: String) -> Unit = {}
@@ -48,7 +48,7 @@ fun SignInForm(
 @Preview(showBackground = true)
 fun SignInFormPreview() {
   QuizHaloTheme {
-    SignInForm(
+    RegisterForm(
       modifier = Modifier.background(Color.Black)
     )
   }

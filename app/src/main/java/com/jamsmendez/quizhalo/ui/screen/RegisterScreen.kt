@@ -73,7 +73,8 @@ fun RegisterScreen(
       scorePoint = scorePoint,
       isRegistered = isRegister,
       onBackClicked = registerViewModel::onBackClicked,
-      onSignInClicked = registerViewModel::onSignInClicked
+      onSignInClicked = registerViewModel::onSignInClicked,
+      onRankingClicked = registerViewModel::onRankingClicked
     )
   }
 }

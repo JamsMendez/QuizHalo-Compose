@@ -7,7 +7,7 @@ object Labels {
   const val BTN_START = "Iniciar"
   const val BTN_RANKING = "Ranking"
   const val BTN_SIGN_IN = "Identificate!"
-  const val BTN_PLAY_AGAIN = "Jugar otra vez?"
+  const val BTN_PLAY_AGAIN = "Otra vez?"
   const val MESSAGE_LESS_POINTS = "Tu puntuacion fue menor!"
   const val MESSAGE_EQUAL_POINTS = "Tu puntuacion fue la misma!"
   const val MESSAGE_GOD_JOB = "Buen trabajo soldado!"

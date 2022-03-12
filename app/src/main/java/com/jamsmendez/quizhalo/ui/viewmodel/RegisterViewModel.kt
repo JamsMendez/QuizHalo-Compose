@@ -16,6 +16,7 @@ import com.jamsmendez.quizhalo.data.repository.Result
 import com.jamsmendez.quizhalo.data.repository.ScoreRepository
 import com.jamsmendez.quizhalo.model.ScoreModel
 import com.jamsmendez.quizhalo.navegation.RouteNavigator
+import com.jamsmendez.quizhalo.ui.screen.RankingRoute
 import com.jamsmendez.quizhalo.ui.screen.RegisterRoute
 import com.jamsmendez.quizhalo.util.Labels.ERROR_UNKNOWN
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -54,6 +55,10 @@ class RegisterViewModel
 
   fun onBackClicked() {
     popBackStack()
+  }
+
+  fun onRankingClicked() {
+    navigateToRoute(RankingRoute.route)
   }
 
   private fun addScore(score: ScoreModel) {

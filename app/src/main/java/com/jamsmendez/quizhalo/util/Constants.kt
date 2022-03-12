@@ -13,7 +13,7 @@ object Constants {
   const val FIELD_POINTS = "points"
   const val FIELD_USERNAME = "username"
 
-  const val NUM_QUESTIONS = 3
+  const val NUM_QUESTIONS = 10
   const val RANKING_LIMIT = 10
   const val TOTAL_TIMER = 30
 }
