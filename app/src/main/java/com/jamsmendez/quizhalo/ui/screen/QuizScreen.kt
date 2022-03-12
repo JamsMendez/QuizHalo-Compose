@@ -23,12 +23,14 @@ fun QuizScreen(
 ) {
   val valueTimerDown = quizViewModel.valueTimerDown
   val currentQuestion = quizViewModel.currentQuestion
+  val questionNum = quizViewModel.questionNum
 
   val question = currentQuestion.value
 
   Quiz(
     timerValue = valueTimerDown.value,
     hasQuestion = question.id.isNotEmpty(),
+    questionNumber = questionNum.value,
     question = question,
     onStartClicked = quizViewModel::onStartClicked,
     onRankingClicked = quizViewModel::onRankingClicked,

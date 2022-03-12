@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.jamsmendez.quizhalo.R
 import com.jamsmendez.quizhalo.navegation.SetupNavGraph
 import com.jamsmendez.quizhalo.ui.theme.QuizHaloTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
+    setTheme(R.style.Theme_QuizHalo)
     super.onCreate(savedInstanceState)
     setContent {
       QuizHaloTheme {

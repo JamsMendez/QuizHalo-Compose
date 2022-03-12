@@ -16,8 +16,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import com.jamsmendez.quizhalo.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -35,7 +37,7 @@ fun SimpleTextField(
       .fillMaxWidth()
       .background(Color.Transparent), leadingIcon = {
       Icon(
-        Icons.Default.Person,
+        painter = painterResource(id = R.drawable.claimant),
         contentDescription = "Icon username",
         modifier = Modifier
           .padding(8.dp)

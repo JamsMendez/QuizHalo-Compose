@@ -2,10 +2,11 @@ package com.jamsmendez.quizhalo.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -15,12 +16,14 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.jamsmendez.quizhalo.R
 import com.jamsmendez.quizhalo.model.AnswerModel
 import com.jamsmendez.quizhalo.model.QuestionModel
+import com.jamsmendez.quizhalo.ui.theme.BlueHalo
 import com.jamsmendez.quizhalo.ui.theme.QuizHaloTheme
 
 @Composable
 fun Quiz(
   timerValue: Float = 1f,
   hasQuestion: Boolean = false,
+  questionNumber: Int = 0,
   question: QuestionModel = QuestionModel(),
   onStartClicked: () -> Unit = {},
   onRankingClicked: () -> Unit = {},
@@ -40,13 +43,33 @@ fun Quiz(
         .background(Color.Black.copy(alpha = 0.5f)),
     ) {
 
-      val (composableRef) = createRefs()
+      val (logoRef, composableRef, panelRef) = createRefs()
       val modifier = Modifier.constrainAs(composableRef) {
         top.linkTo(parent.top, margin = 16.dp)
         bottom.linkTo(parent.bottom, margin = 16.dp)
       }
 
       if (hasQuestion) {
+
+        QuizFooter(
+          modifier = Modifier
+            .constrainAs(panelRef) {
+              end.linkTo(parent.end)
+              bottom.linkTo(parent.bottom)
+            },
+          questionNumber = questionNumber
+        )
+
+        Logo(
+          modifier = Modifier
+            .constrainAs(logoRef) {
+              top.linkTo(parent.top)
+              start.linkTo(parent.start)
+              end.linkTo(parent.end)
+              bottom.linkTo(composableRef.top)
+            }
+        )
+
         QuizForm(
           modifier = modifier,
           question = question,

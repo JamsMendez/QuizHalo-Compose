@@ -36,6 +36,7 @@ class QuizViewModel
     mutableStateOf(QuestionListState())
   private val _currentQuestionState: MutableState<QuestionModel> = mutableStateOf(QuestionModel())
   private val _valueTimerDownState: MutableState<Float> = mutableStateOf(1f)
+  private val _questionNumState: MutableState<Int> = mutableStateOf(NUM_QUESTIONS)
 
   private var _scorePoints: Int = 0
   private var _points: Int = 0
@@ -46,6 +47,7 @@ class QuizViewModel
 
   val currentQuestion: State<QuestionModel> = _currentQuestionState
   val valueTimerDown: State<Float> = _valueTimerDownState
+  val questionNum: State<Int> = _questionNumState
 
   init {
     _mediaLowShields.isLooping = true
@@ -88,6 +90,7 @@ class QuizViewModel
       val options = question.options.toMutableList().shuffled()
       question.options = options
 
+      _questionNumState.value = NUM_QUESTIONS - _questionIndex
       _currentQuestionState.value = question
       return true
     }

@@ -91,7 +91,9 @@ fun Register(
 
         if (!isRegistered) {
           SignInForm(
-            Modifier.fillMaxWidth(),
+            Modifier
+              .fillMaxWidth()
+              .padding(horizontal = 16.dp),
             onSignInClicked = onSignInClicked
           )
           Spacer(
