@@ -1,6 +1,8 @@
 ﻿# QuizHalo
 
 Aplicación de Android usando **Jetpack Compose** y **Firebase**.
+
+[Descargar APK](https://drive.google.com/file/d/1whSfwh8TTzah9v_zwNuV1l3KaDushM7A/view?usp=sharing)
  
 | Menú | Quiz | Quiz |
 |--|--|--|
